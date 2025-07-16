@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Ghost Multiplayer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #1a1a2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #f39c12;
+        }
+
+        .splash-screen {
+            text-align: center;
+            background: rgba(22, 33, 62, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            border: 3px solid #f39c12;
+            max-width: 500px;
+        }
+
+        .splash-screen h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .splash-screen p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .name-input {
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #f39c12;
+            border-radius: 8px;
+            background: #16213e;
+            color: #f39c12;
+            margin: 10px;
+            width: 200px;
+        }
+
+        .btn {
+            background: #f39c12;
+            color: #1a1a2e;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .lobby-screen {
+            text-align: center;
+            background: rgba(22, 33, 62, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            border: 3px solid #f39c12;
+            max-width: 400px;
+        }
+
+        .spinner {
+            border: 4px solid #16213e;
+            border-top: 4px solid #f39c12;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .game-container {
+            display: none;
+            position: relative;
+        }
+
+        canvas {
+            border: 2px solid #f39c12;
+            background: #16213e;
+        }
+
+        .game-ui {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #f39c12;
+            font-size: 18px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .timer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #e74c3c;
+            font-size: 24px;
+            font-weight: bold;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .game-end {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.9);
+            color: #f39c12;
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid #f39c12;
+            text-align: center;
+            display: none;
+        }
+
+        .winner {
+            color: #2ecc71;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .loser {
+            color: #e74c3c;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="splash-screen">
+        <h1>👻₿ Bitcoin Ghost Battle</h1>
+        <p>Compete against other players in real-time!<br>
+        Collect bitcoins, steal from opponents, and return to your base to score.<br>
+        <strong>2 minutes of intense competition!</strong></p>
+        
+        <input type="text" id="playerName" class="name-input" placeholder="Enter your name" maxlength="20">
+        <br>
+        <button id="joinLobbyBtn" class="btn">Join Game Lobby</button>
+    </div>
+
+    <!-- Lobby Screen -->
+    <div id="lobbyScreen" class="lobby-screen hidden">
+        <h2>🎮 Game Lobby</h2>
+        <div class="spinner"></div>
+        <p id="lobbyStatus">Connecting...</p>
+        <p><small>You'll be matched with another player automatically</small></p>
+    </div>
+
+    <!-- Game Container -->
+    <div id="gameContainer" class="game-container">
+        <div class="game-ui">
+            <div>Your Score: <span id="playerScore">0</span></div>
+            <div>Opponent: <span id="opponentScore">0</span></div>
+            <div>Collected: <span id="collected">0</span></div>
+            <div>Network: <span id="networkStats">0 KB/s</span></div>
+            <div>Updates: <span id="updateRate">0/s</span></div>
+        </div>
+        
+        <div class="timer">
+            <span id="timeLeft">2:00</span>
+        </div>
+        
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        
+        <div id="gameEndScreen" class="game-end">
+            <div id="resultText" class="winner">You Win!</div>
+            <div>Final Score: <span id="finalPlayerScore">0</span> - <span id="finalOpponentScore">0</span></div>
+            <br>
+            <button id="playAgainBtn" class="btn">Play Again</button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="multiplayer-game.js"></script>
+</body>
+</html>

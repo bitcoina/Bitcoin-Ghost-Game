@@ -1,0 +1,20 @@
+{
+  "name": "bitcoin-ghost-multiplayer",
+  "version": "1.0.0",
+  "description": "Multiplayer Bitcoin Ghost Game - inspired by Google Doodle Halloween 2018",
+  "main": "working-multiplayer-server.js",
+  "scripts": {
+    "start": "node working-multiplayer-server.js",
+    "dev": "node working-multiplayer-server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": ["game", "multiplayer", "bitcoin", "websocket", "realtime"],
+  "author": "Your Name",
+  "license": "MIT"
+}
