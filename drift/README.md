@@ -12,7 +12,7 @@ names, logos, tracks or characters taken from any existing game.
 
 Open `drift/index.html` in a browser. It needs no build step and no server, so
 double-clicking the file works. If the repo's Node server is running (`npm start`),
-it is also served at `http://localhost:3001/drift/`.
+it is also served at `http://localhost:3001/drift/index.html`.
 
 | Action | Keys | Touch |
 | --- | --- | --- |
