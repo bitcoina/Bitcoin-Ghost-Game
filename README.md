@@ -1,6 +1,6 @@
 # Bitcoin Ghost Multiplayer Game 👻₿
 
-> Also in this repo: **[Midship Drift](drift/)**, an arcade sprite-scaling racer starring Leo's MR2. Open `drift/index.html` to play.
+> Also in this repo: **[Midship Drift](drift/)**, an arcade sprite-scaling racer starring Leo's MR2. Open `drift/index.html` to play, or `drift2/index.html` for version 2 with pre-rendered sprites.
 
 A real-time multiplayer game inspired by Google's Halloween 2018 Doodle, but with a Bitcoin theme!
 
